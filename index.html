@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAA Complete Visual Exam Study Sheet</title>
+  <style>
+    :root {
+      --text: #111827;
+      --border: #9ca3af;
+      --bg-code: #f3f4f6;
+      --accent: #1d4ed8;
+      --bg-ktu: #f8fafc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.5;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #ffffff;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-secondary {
+      background: #4b5563;
+    }
+    h1 {
+      font-size: 22px;
+      border-bottom: 2px solid #111827;
+      padding-bottom: 6px;
+      margin-top: 0;
+    }
+    h2 {
+      font-size: 17px;
+      background: #111827;
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 4px;
+      margin-top: 26px;
+    }
+    h3 {
+      font-size: 15.5px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      margin-top: 20px;
+    }
+    /* Strictly BOLD for all content from the uploaded PDF */
+    .from-pdf {
+      font-weight: 700;
+    }
+    /* Regular weight for added KTU material */
+    .added-ktu {
+      font-weight: 400;
+      background: var(--bg-ktu);
+      border-left: 4px solid #475569;
+      padding: 10px 14px;
+      margin: 12px 0;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #1e293b;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .cite {
+      font-size: 11px;
+      font-weight: 400;
+      color: #6b7280;
+    }
+    body.hide-cites .cite {
+      display: none;
+    }
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 13px;
+      margin: 8px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 5px 8px;
+      text-align: center;
+    }
+    th { background: #f3f4f6; }
+    .matrix-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .matrix-box {
+      border: 1px solid #d1d5db;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+    .matrix-box table {
+      width: auto;
+      margin: 4px auto;
+    }
+    .svg-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      margin: 12px 0;
+      padding: 10px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+    .svg-card {
+      text-align: center;
+      font-size: 12.5px;
+    }
+    svg {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+    .node {
+      fill: #ffffff;
+      stroke: #111827;
+      stroke-width: 2;
+    }
+    .node-text {
+      font-family: sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: central;
+      fill: #111827;
+    }
+    .edge {
+      stroke: #111827;
+      stroke-width: 1.8;
+      fill: none;
+    }
+    .edge-mst {
+      stroke: #1d4ed8;
+      stroke-width: 2.5;
+      fill: none;
+    }
+    .weight-text {
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      fill: #b91c1c;
+    }
+    @media print {
+      .toolbar { display: none !important; }
+      body { padding: 0; max-width: 100%; }
+      h2, h3 { page-break-after: avoid; }
+      pre, table, .svg-container, .matrix-grid, .added-ktu {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body class="hide-cites">
+
+  <!-- Shared SVG Arrowhead Definition -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="#111827" />
+      </marker>
+    </defs>
+  </svg>
+
+  <div class="toolbar">
+    <div>
+      <strong>Key:</strong> <span class="from-pdf">Bold = From Uploaded PDF</span> | <span>Regular = Added Missing KTU Syllabus</span>
+    </div>
+    <div>
+      <button class="btn btn-secondary" onclick="document.body.classList.toggle('hide-cites')">Toggle Citations</button>
+      <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </div>
+
+  <h1>Design &amp; Analysis of Algorithms — Complete Visual Study Sheet</h1>
+
+  <!-- ==================== PART A: 3 MARKS ==================== -->
+  <h2>PART A: 3 Marks Questions</h2>
+
+  <h3>1. Floyd-Warshall Algorithm and its Complexity Analysis</h3>
+  <div class="from-pdf">
+    <p>In All Pairs Shortest Path problem, we find the shortest distance between every pair of vertices in a given weighted, directed graph <span class="cite">[span_34](start_span)[span_34](end_span)[span_35](start_span)[span_35](end_span)</span>. Negative edge weights are also allowed <span class="cite">[span_36](start_span)[span_36](end_span)[span_37](start_span)[span_37](end_span)</span>. The Floyd-Warshall algorithm is for solving the all pairs shortest path problem <span class="cite">[span_38](start_span)[span_38](end_span)[span_39](start_span)[span_39](end_span)</span>. As a result of this algorithm, it will generate a matrix that represents the minimum distance from any node to all other nodes in the graph <span class="cite">[span_40](start_span)[span_40](end_span)[span_41](start_span)[span_41](end_span)</span>.</p>
+    <pre class="from-pdf">Algorithm FloydWarshall(cost[][], n)
+for i = 1 to n do
+    for j = 1 to n do
+        D⁰[i][j] = cost[i][j]
+for k = 1 to n do
+    for i = 1 to n do
+        for j = 1 to n do
+            Dᵏ[i, j] = min{ Dᵏ⁻¹[i, j], Dᵏ⁻¹[i, k] + Dᵏ⁻¹[k, j] }
+Return D</pre>
+  </div>
+
+  <div class="added-ktu">
+    <span class="badge">Added Missing Part — Complexity Analysis (KTU Syllabus)</span>
+    <ul>
+      <li>Time Complexity:
+        <ul>
+          <li>Initialization Loop: Two nested <code>for</code> loops copy <code>cost[i][j]</code> into <code>D⁰[i][j]</code> in Θ(n²) time.</li>
+          <li>Triple Nested Loop: Three nested <code>for</code> loops (<code>k = 1..n</code>, <code>i = 1..n</code>, <code>j = 1..n</code>) each iterate <em>n</em> times. The inner update <code>min{D[i,j], D[i,k] + D[k,j]}</code> takes constant time O(1).</li>
+          <li>Total Time: T(n) = Θ(n²) + ∑<sub>k=1..n</sub> ∑<sub>i=1..n</sub> ∑<sub>j=1..n</sub> O(1) = Θ(n³) (or Θ(|V|³)) in best, average, and worst cases.</li>
+        </ul>
+      </li>
+      <li>Space Complexity: Θ(n²) auxiliary space to store the <em>n × n</em> distance matrix D.</li>
+    </ul>
+  </div>
+
+  <h3>2. Steps and Characteristics of Dynamic Programming</h3>
+  <div class="from-pdf">
+    <p>Dynamic Programming (DP) is an algorithm design method that can be used when the solution to a problem can be viewed as the result of a sequence of decisions <span class="cite">[span_42](start_span)[span_42](end_span)[span_43](start_span)[span_43](end_span)</span>. It is mainly an optimization technique <span class="cite">[span_44](start_span)[span_44](end_span)[span_45](start_span)[span_45](end_span)</span>. Whenever a recursive solution has repeated calls for the same inputs, we can optimize it using dynamic programming <span class="cite">[span_46](start_span)[span_46](end_span)[span_47](start_span)[span_47](end_span)</span>. DP solves each subproblem just once and stores the result in a table so that it can be repeatedly retrieved when needed again <span class="cite">[span_48](start_span)[span_48](end_span)[span_49](start_span)[span_49](end_span)</span>.</p>
+    <p>Characteristics of DP:</p>
+    <ul>
+      <li>Overlapping Subproblems: Subproblems are smaller versions of the original problem <span class="cite">[span_50](start_span)[span_50](end_span)[span_51](start_span)[span_51](end_span)</span>. DP combines solutions to subproblems <span class="cite">[span_52](start_span)[span_52](end_span)[span_53](start_span)[span_53](end_span)</span>. It is mainly used where the solution of one subproblem is needed repeatedly <span class="cite">[span_54](start_span)[span_54](end_span)[span_55](start_span)[span_55](end_span)</span>. The computed solutions are stored in a table so that they don't have to be recomputed; hence, this technique is needed where overlapping subproblems exist <span class="cite">[span_56](start_span)[span_56](end_span)[span_57](start_span)[span_57](end_span)</span>.</li>
+      <li>Optimal Substructure: The given problem has optimal substructure property if the optimal solution of the given problem can be obtained using optimal solutions of its subproblems <span class="cite">[span_58](start_span)[span_58](end_span)[span_59](start_span)[span_59](end_span)</span>.</li>
+    </ul>
+    <p>Steps of Dynamic Programming:</p>
+    <ol>
+      <li>Characterize the structure of an optimal solution <span class="cite">[span_60](start_span)[span_60](end_span)[span_61](start_span)[span_61](end_span)</span>.</li>
+      <li>Recursively define the value of an optimal solution <span class="cite">[span_62](start_span)[span_62](end_span)[span_63](start_span)[span_63](end_span)</span>.</li>
+      <li>Compute the value of an optimal solution, typically in a bottom-up manner <span class="cite">[span_64](start_span)[span_64](end_span)[span_65](start_span)[span_65](end_span)</span>.</li>
+      <li>Construct an optimal solution from the computed information <span class="cite">[span_66](start_span)[span_66](end_span)[span_67](start_span)[span_67](end_span)</span>.</li>
+    </ol>
+  </div>
+
+  <h3>3. Control Abstraction of Greedy Strategy</h3>
+  <div class="from-pdf">
+    <p>For a given problem, there are many possible solutions, but only some solutions satisfy the constraint; they are called feasible solutions <span class="cite">[span_68](start_span)[span_68](end_span)[span_69](start_span)[span_69](end_span)</span>. Out of these feasible solutions, one solution will provide the best result; it is called the optimal solution <span class="cite">[span_70](start_span)[span_70](end_span)[span_71](start_span)[span_71](end_span)</span>. An optimal solution is a solution which is feasible and gives the best result <span class="cite">[span_72](start_span)[span_72](end_span)[span_73](start_span)[span_73](end_span)</span>. For a given problem, there can be more than 1 feasible solution, but only 1 optimal solution <span class="cite">[span_74](start_span)[span_74](end_span)[span_75](start_span)[span_75](end_span)</span>.</p>
+    <p>If a problem requires either maximum/minimum result, then that problem is called an optimization problem <span class="cite">[span_76](start_span)[span_76](end_span)[span_77](start_span)[span_77](end_span)</span>. The strategies used for solving optimization problems are: Greedy Method, Dynamic Programming, and Branch and Bound <span class="cite">[span_78](start_span)[span_78](end_span)[span_79](start_span)[span_79](end_span)</span>.</p>
+    <pre class="from-pdf">Algorithm Greedy(a, n) // a[1:n] contains n inputs
+{
+    solution = ϕ
+    for i = 1 to n do
+    {
+        x = select(a)
+        if feasible(solution, x) then
+            solution = union(solution, x)
+    }
+    return solution
+}</pre>
+    <ul>
+      <li>Select() function: takes an input from the array a[] and it is assigned to x <span class="cite">[span_80](start_span)[span_80](end_span)[span_81](start_span)[span_81](end_span)</span>.</li>
+      <li>Feasible(): is a boolean-valued function that determines whether x can be included in the solution <span class="cite">[span_82](start_span)[span_82](end_span)[span_83](start_span)[span_83](end_span)</span>.</li>
+      <li>Union(): combines x with the solution <span class="cite">[span_84](start_span)[span_84](end_span)[span_85](start_span)[span_85](end_span)</span>.</li>
+    </ul>
+  </div>
+
+  <!-- ==================== PART B: 7 MARKS ==================== -->
+  <h2>PART B: 7 Marks Questions</h2>
+
+  <h3>4. Merge Sort Algorithm, Diagram, and Complexity Analysis</h3>
+  <div class="from-pdf">
+    <pre class="from-pdf">MERGE_SORT(A, p, r)
+if p &lt; r
+    then q ← ⌊(p + r) / 2⌋
+    MERGE_SORT(A, p, q)
+    MERGE_SORT(A, q + 1, r)
+    MERGE(A, p, q, r)
+
+MERGE(A, p, q, r)
+n₁ ← q - p + 1
+n₂ ← r - q
+create arrays L[1 ... n₁ + 1] and R[1 ... n₂ + 1]
+for i ← 1 to n₁
+    L[i] ← A[p + i - 1]
+for j ← 1 to n₂
+    R[j] ← A[q + j]
+L[n₁ + 1] ← ∞
+R[n₂ + 1] ← ∞
+i ← 1
+j ← 1
+for k ← p to r
+    do if L[i] ≤ R[j]
+        A[k] ← L[i]
+        i ← i + 1
+    else
+        A[k] ← R[j]
+        j ← j + 1</pre>
+
+    <!-- Visual SVG Diagram from PDF Page 25 / 70 -->
+    <div class="svg-container">
+      <div class="svg-card">
+        <div>Divide-and-Conquer Merge Sort Tree Diagram (from PDF Page 25) <span class="cite">[span_86](start_span)[span_86](end_span)[span_87](start_span)[span_87](end_span)</span></div>
+        <svg width="680" height="330" viewBox="0 0 680 330">
+          <!-- Level 0 -->
+          <rect x="210" y="8" width="260" height="26" rx="4" fill="#f3f4f6" stroke="#111827" stroke-width="1.5"/>
+          <text x="340" y="21" class="node-text">3 | 10 | 12 | 8 | 5 | 6 | 25 | 30</text>
+          <line x1="280" y1="34" x2="180" y2="56" class="edge" marker-end="url(#arrow)"/>
+          <line x1="400" y1="34" x2="500" y2="56" class="edge" marker-end="url(#arrow)"/>
+
+          <!-- Level 1 -->
+          <rect x="100" y="58" width="150" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="175" y="70" class="node-text">3 | 10 | 12 | 8</text>
+          <rect x="430" y="58" width="150" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="505" y="70" class="node-text">5 | 6 | 25 | 30</text>
+
+          <line x1="145" y1="82" x2="105" y2="104" class="edge" marker-end="url(#arrow)"/>
+          <line x1="205" y1="82" x2="245" y2="104" class="edge" marker-end="url(#arrow)"/>
+          <line x1="475" y1="82" x2="435" y2="104" class="edge" marker-end="url(#arrow)"/>
+          <line x1="535" y1="82" x2="575" y2="104" class="edge" marker-end="url(#arrow)"/>
+
+          <!-- Level 2 -->
+          <rect x="65" y="106" width="75" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="102" y="118" class="node-text">3 | 10</text>
+          <rect x="210" y="106" width="75" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="247" y="118" class="node-text">12 | 8</text>
+          <rect x="395" y="106" width="75" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="432" y="118" class="node-text">5 | 6</text>
+          <rect x="540" y="106" width="80" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="580" y="118" class="node-text">25 | 30</text>
+
+          <!-- Split to singletons -->
+          <line x1="85" y1="130" x2="65" y2="152" class="edge" marker-end="url(#arrow)"/>
+          <line x1="115" y1="130" x2="135" y2="152" class="edge" marker-end="url(#arrow)"/>
+          <line x1="230" y1="130" x2="210" y2="152" class="edge" marker-end="url(#arrow)"/>
+          <line x1="260" y1="130" x2="280" y2="152" class="edge" marker-end="url(#arrow)"/>
+          <line x1="415" y1="130" x2="395" y2="152" class="edge" marker-end="url(#arrow)"/>
+          <line x1="445" y1="130" x2="465" y2="152" class="edge" marker-end="url(#arrow)"/>
+          <line x1="565" y1="130" x2="545" y2="152" class="edge" marker-end="url(#arrow)"/>
+          <line x1="595" y1="130" x2="615" y2="152" class="edge" marker-end="url(#arrow)"/>
+
+          <!-- Level 3 (Singletons) -->
+          <rect x="45" y="154" width="36" height="22" fill="#fff" stroke="#111827"/><text x="63" y="165" class="node-text">3</text>
+          <rect x="118" y="154" width="36" height="22" fill="#fff" stroke="#111827"/><text x="136" y="165" class="node-text">10</text>
+          <rect x="192" y="154" width="36" height="22" fill="#fff" stroke="#111827"/><text x="210" y="165" class="node-text">12</text>
+          <rect x="262" y="154" width="36" height="22" fill="#fff" stroke="#111827"/><text x="280" y="165" class="node-text">8</text>
+          <rect x="376" y="154" width="36" height="22" fill="#fff" stroke="#111827"/><text x="394" y="165" class="node-text">5</text>
+          <rect x="448" y="154" width="36" height="22" fill="#fff" stroke="#111827"/><text x="466" y="165" class="node-text">6</text>
+          <rect x="525" y="154" width="38" height="22" fill="#fff" stroke="#111827"/><text x="544" y="165" class="node-text">25</text>
+          <rect x="598" y="154" width="38" height="22" fill="#fff" stroke="#111827"/><text x="617" y="165" class="node-text">30</text>
+
+          <!-- Merge Level 1 -->
+          <line x1="65" y1="176" x2="90" y2="198" class="edge" marker-end="url(#arrow)"/>
+          <line x1="135" y1="176" x2="110" y2="198" class="edge" marker-end="url(#arrow)"/>
+          <line x1="210" y1="176" x2="235" y2="198" class="edge" marker-end="url(#arrow)"/>
+          <line x1="280" y1="176" x2="255" y2="198" class="edge" marker-end="url(#arrow)"/>
+          <line x1="395" y1="176" x2="420" y2="198" class="edge" marker-end="url(#arrow)"/>
+          <line x1="465" y1="176" x2="440" y2="198" class="edge" marker-end="url(#arrow)"/>
+          <line x1="545" y1="176" x2="570" y2="198" class="edge" marker-end="url(#arrow)"/>
+          <line x1="615" y1="176" x2="590" y2="198" class="edge" marker-end="url(#arrow)"/>
+
+          <rect x="65" y="200" width="75" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="102" y="212" class="node-text">3 | 10</text>
+          <rect x="210" y="200" width="75" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="247" y="212" class="node-text">8 | 12</text>
+          <rect x="395" y="200" width="75" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="432" y="212" class="node-text">5 | 6</text>
+          <rect x="540" y="200" width="80" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="580" y="212" class="node-text">25 | 30</text>
+
+          <!-- Merge Level 2 -->
+          <line x1="105" y1="224" x2="155" y2="246" class="edge" marker-end="url(#arrow)"/>
+          <line x1="245" y1="224" x2="195" y2="246" class="edge" marker-end="url(#arrow)"/>
+          <line x1="435" y1="224" x2="485" y2="246" class="edge" marker-end="url(#arrow)"/>
+          <line x1="575" y1="224" x2="525" y2="246" class="edge" marker-end="url(#arrow)"/>
+
+          <rect x="100" y="248" width="150" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="175" y="260" class="node-text">3 | 8 | 10 | 12</text>
+          <rect x="430" y="248" width="150" height="24" rx="4" fill="#fff" stroke="#111827" stroke-width="1.5"/>
+          <text x="505" y="260" class="node-text">5 | 6 | 25 | 30</text>
+
+          <!-- Final Merge -->
+          <line x1="185" y1="272" x2="290" y2="294" class="edge" marker-end="url(#arrow)"/>
+          <line x1="495" y1="272" x2="390" y2="294" class="edge" marker-end="url(#arrow)"/>
+          <rect x="200" y="296" width="280" height="26" rx="4" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+          <text x="340" y="309" class="node-text">3 | 5 | 6 | 8 | 10 | 12 | 25 | 30</text>
+        </svg>
+      </div>
+    </div>
+
+    <p>Analysis of Merge Sort <span class="cite">[span_88](start_span)[span_88](end_span)[span_89](start_span)[span_89](end_span)[span_90](start_span)[span_90](end_span)</span>:</p>
+    <p>Let T(n) be the running time on a problem of size n <span class="cite">[span_91](start_span)[span_91](end_span)[span_92](start_span)[span_92](end_span)</span>. In divide-and-conquer method, the running time T(n) can be described as: T(n) = O(1) if n = 1, and T(n) = aT(n/b) + D(n) + C(n) otherwise, where aT(n/b) means 'a' subproblems each of which is size 1/b of the original <span class="cite">[span_93](start_span)[span_93](end_span)[span_94](start_span)[span_94](end_span)</span>. D(n) is the time to divide the problem into subproblems, and C(n) is the time to combine the solutions of the subproblems to obtain the solution of the original problem <span class="cite">[span_95](start_span)[span_95](end_span)</span>.</p>
+    <ul>
+      <li>Divide: To divide array into 2 subarrays, compute the mid value q = (p + r)/2, which takes O(1) constant time ⇒ D(n) = O(1) <span class="cite">[span_96](start_span)[span_96](end_span)</span>.</li>
+      <li>Conquer: Recursively solve 2 subproblems each of size n/2 ⇒ 2T(n/2) <span class="cite">[span_97](start_span)[span_97](end_span)</span>.</li>
+      <li>Combine: The merge procedure on an n-element array takes time O(n) ⇒ C(n) = O(n) <span class="cite">[span_98](start_span)[span_98](end_span)</span>.</li>
+    </ul>
+    <p>T(n) = 2T(n/2) + O(1) + O(n) ⇒ T(n) = 2T(n/2) + n <span class="cite">[span_99](start_span)[span_99](end_span)</span>. Here a = 2, b = 2, log<sub>b</sub>a = log₂2 = 1 <span class="cite">[span_100](start_span)[span_100](end_span)</span>. Since f(n) = n¹ = Θ(n¹ log⁰n) (k = 1, p = 0), Therefore: T(n) = Θ(n log n) <span class="cite">[span_101](start_span)[span_101](end_span)</span>.</p>
+  </div>
+
+  <!-- ==================== KRUSKAL'S ALGORITHM ==================== -->
+  <h3>5. Kruskal's Algorithm and Visual Solved Problems</h3>
+  <div class="from-pdf">
+    <p>Spanning Tree: Spanning tree is a subset of an undirected connected graph G = (V, E) which has all of the vertices covered with minimum possible number of edges <span class="cite">[span_102](start_span)[span_102](end_span)[span_103](start_span)[span_103](end_span)</span>. A connected graph G can have more than 1 spanning tree, and the spanning tree does not have any cycle <span class="cite">[span_104](start_span)[span_104](end_span)[span_105](start_span)[span_105](end_span)</span>. Let G = (V, E) be an undirected graph where V is the set of vertices and E is the set of edges; for each edge (u, v) ∈ E, we have a weight w(u, v) specifying the cost to connect u and v <span class="cite">[span_106](start_span)[span_106](end_span)[span_107](start_span)[span_107](end_span)</span>. We have to find an acyclic subset T ⊆ E that connects all of the vertices and the total weight w(T) is minimized <span class="cite">[span_108](start_span)[span_108](end_span)[span_109](start_span)[span_109](end_span)</span>. This is called the Minimum Spanning Tree problem (MST) <span class="cite">[span_110](start_span)[span_110](end_span)[span_111](start_span)[span_111](end_span)</span>.</p>
+    <pre class="from-pdf">MST_KRUSKAL(G, w)
+1. A ← ϕ
+2. for each vertex v ∈ V[G]
+3.     do MAKE-SET(v)
+4. Sort the edges of E into non-decreasing order by weight w
+5. for each edge (u, v) ∈ E, taken in non-decreasing order by weight
+6.     do if FIND-SET(u) ≠ FIND-SET(v)
+7.         then A ← A ∪ {(u, v)}
+8.         UNION(u, v)
+9. return A</pre>
+
+    <!-- KRUSKAL PROBLEM 1 VISUALS (Page 19 / 48) -->
+    <p>Solved Problem 1 (Page 19): Find MST and Total Weight using Kruskal's Algorithm <span class="cite">[span_112](start_span)[span_112](end_span)[span_113](start_span)[span_113](end_span)</span>:</p>
+    <div class="svg-container">
+      <div class="svg-card">
+        <div>Given Graph G <span class="cite">[span_114](start_span)[span_114](end_span)[span_115](start_span)[span_115](end_span)</span></div>
+        <svg width="270" height="185" viewBox="0 0 270 185">
+          <!-- Edges -->
+          <line x1="30" y1="105" x2="90" y2="35" class="edge"/><text x="48" y="65" class="weight-text">4</text>
+          <line x1="30" y1="105" x2="95" y2="155" class="edge"/><text x="52" y="142" class="weight-text">4</text>
+          <line x1="90" y1="35" x2="95" y2="155" class="edge"/><text x="78" y="100" class="weight-text">1</text>
+          <line x1="90" y1="35" x2="180" y2="35" class="edge"/><text x="135" y="27" class="weight-text">5</text>
+          <line x1="90" y1="35" x2="185" y2="155" class="edge"/><text x="142" y="90" class="weight-text">3</text>
+          <line x1="95" y1="155" x2="185" y2="155" class="edge"/><text x="140" y="170" class="weight-text">2</text>
+          <line x1="180" y1="35" x2="185" y2="155" class="edge"/><text x="192" y="100" class="weight-text">3</text>
+          <line x1="180" y1="35" x2="245" y2="95" class="edge"/><text x="218" y="58" class="weight-text">8</text>
+          <line x1="185" y1="155" x2="245" y2="95" class="edge"/><text x="222" y="138" class="weight-text">7</text>
+          <!-- Nodes -->
+          <circle cx="30" cy="105" r="15" class="node"/><text x="30" y="105" class="node-text">5</text>
+          <circle cx="90" cy="35" r="15" class="node"/><text x="90" y="35" class="node-text">4</text>
+          <circle cx="95" cy="155" r="15" class="node"/><text x="95" y="155" class="node-text">1</text>
+          <circle cx="180" cy="35" r="15" class="node"/><text x="180" y="35" class="node-text">3</text>
+          <circle cx="185" cy="155" r="15" class="node"/><text x="185" y="155" class="node-text">2</text>
+          <circle cx="245" cy="95" r="15" class="node"/><text x="245" y="95" class="node-text">6</text>
+        </svg>
+      </div>
+
+      <!-- Step-by-step MST diagrams from Page 19 -->
+      <div class="svg-card">
+        <div>Step 1 &amp; 2: Add (1,4)=1, (1,2)=2 <span class="cite">[span_116](start_span)[span_116](end_span)[span_117](start_span)[span_117](end_span)</span></div>
+        <svg width="160" height="150" viewBox="50 15 160 160">
+          <line x1="90" y1="35" x2="95" y2="155" class="edge-mst"/><text x="78" y="100" class="weight-text">1</text>
+          <line x1="95" y1="155" x2="185" y2="155" class="edge-mst"/><text x="140" y="145" class="weight-text">2</text>
+          <circle cx="90" cy="35" r="14" class="node"/><text x="90" y="35" class="node-text">4</text>
+          <circle cx="95" cy="155" r="14" class="node"/><text x="95" y="155" class="node-text">1</text>
+          <circle cx="185" cy="155" r="14" class="node"/><text x="185" y="155" class="node-text">2</text>
+        </svg>
+      </div>
+
+      <div class="svg-card">
+        <div>Step 3 &amp; 4: Add (2,3)=3, (1,5)=4 <span class="cite">[span_118](start_span)[span_118](end_span)[span_119](start_span)[span_119](end_span)</span></div>
+        <svg width="200" height="150" viewBox="10 15 200 160">
+          <line x1="30" y1="105" x2="95" y2="155" class="edge-mst"/><text x="52" y="142" class="weight-text">4</text>
+          <line x1="90" y1="35" x2="95" y2="155" class="edge-mst"/><text x="78" y="100" class="weight-text">1</text>
+          <line x1="95" y1="155" x2="185" y2="155" class="edge-mst"/><text x="140" y="145" class="weight-text">2</text>
+          <line x1="180" y1="35" x2="185" y2="155" class="edge-mst"/><text x="192" y="100" class="weight-text">3</text>
+          <circle cx="30" cy="105" r="14" class="node"/><text x="30" y="105" class="node-text">5</text>
+          <circle cx="90" cy="35" r="14" class="node"/><text x="90" y="35" class="node-text">4</text>
+          <circle cx="95" cy="155" r="14" class="node"/><text x="95" y="155" class="node-text">1</text>
+          <circle cx="180" cy="35" r="14" class="node"/><text x="180" y="35" class="node-text">3</text>
+          <circle cx="185" cy="155" r="14" class="node"/><text x="185" y="155" class="node-text">2</text>
+        </svg>
+      </div>
+
+      <div class="svg-card">
+        <div>Step 5 (Final MST): Add (2,6)=7 <span class="cite">[span_120](start_span)[span_120](end_span)[span_121](start_span)[span_121](end_span)</span></div>
+        <svg width="260" height="150" viewBox="10 15 255 160">
+          <line x1="30" y1="105" x2="95" y2="155" class="edge-mst"/><text x="52" y="142" class="weight-text">4</text>
+          <line x1="90" y1="35" x2="95" y2="155" class="edge-mst"/><text x="78" y="100" class="weight-text">1</text>
+          <line x1="95" y1="155" x2="185" y2="155" class="edge-mst"/><text x="140" y="145" class="weight-text">2</text>
+          <line x1="180" y1="35" x2="185" y2="155" class="edge-mst"/><text x="192" y="100" class="weight-text">3</text>
+          <line x1="185" y1="155" x2="245" y2="95" class="edge-mst"/><text x="222" y="138" class="weight-text">7</text>
+          <circle cx="30" cy="105" r="14" class="node"/><text x="30" y="105" class="node-text">5</text>
+          <circle cx="90" cy="35" r="14" class="node"/><text x="90" y="35" class="node-text">4</text>
+          <circle cx="95" cy="155" r="14" class="node"/><text x="95" y="155" class="node-text">1</text>
+          <circle cx="180" cy="35" r="14" class="node"/><text x="180" y="35" class="node-text">3</text>
+          <circle cx="185" cy="155" r="14" class="node"/><text x="185" y="155" class="node-text">2</text>
+          <circle cx="245" cy="95" r="14" class="node"/><text x="245" y="95" class="node-text">6</text>
+        </svg>
+      </div>
+    </div>
+    <p>Disjoint Sets Trace: {1}{2}{3}{4}{5}{6} → {1,4}{2}{3}{5}{6} → {1,2,4}{3}{5}{6} → {1,2,3,4}{5}{6} → {1,2,3,4,5}{6} → {1,2,3,4,5,6} <span class="cite">[span_122](start_span)[span_122](end_span)[span_123](start_span)[span_123](end_span)</span>. Total Weight = 1 + 2 + 3 + 4 + 7 = 17 <span class="cite">[span_124](start_span)[span_124](end_span)[span_125](start_span)[span_125](end_span)</span>.</p>
+
+    <!-- KRUSKAL PROBLEM 2 VISUALS (Page 20 / 75) -->
+    <p>Solved Problem 2 (Page 20 — Vertices 0 to 6) <span class="cite">[span_126](start_span)[span_126](end_span)[span_127](start_span)[span_127](end_span)</span>:</p>
+    <div class="svg-container">
+      <div class="svg-card">
+        <div>Given Graph (Vertices 0..6) <span class="cite">[span_128](start_span)[span_128](end_span)[span_129](start_span)[span_129](end_span)</span></div>
+        <svg width="290" height="190" viewBox="0 0 290 190">
+          <line x1="30" y1="95" x2="95" y2="35" class="edge"/><text x="52" y="55" class="weight-text">2</text>
+          <line x1="30" y1="95" x2="95" y2="155" class="edge"/><text x="52" y="140" class="weight-text">3</text>
+          <line x1="95" y1="35" x2="195" y2="35" class="edge"/><text x="145" y="28" class="weight-text">11</text>
+          <line x1="95" y1="35" x2="145" y2="95" class="edge"/><text x="105" y="75" class="weight-text">12</text>
+          <line x1="95" y1="155" x2="145" y2="95" class="edge"/><text x="108" y="135" class="weight-text">14</text>
+          <line x1="95" y1="155" x2="195" y2="155" class="edge"/><text x="145" y="172" class="weight-text">5</text>
+          <line x1="195" y1="35" x2="145" y2="95" class="edge"/><text x="160" y="62" class="weight-text">1</text>
+          <line x1="145" y1="95" x2="260" y2="95" class="edge"/><text x="200" y="88" class="weight-text">4</text>
+          <line x1="145" y1="95" x2="195" y2="155" class="edge"/><text x="175" y="128" class="weight-text">13</text>
+          <line x1="195" y1="35" x2="260" y2="95" class="edge"/><text x="235" y="58" class="weight-text">9</text>
+          <line x1="195" y1="155" x2="260" y2="95" class="edge"/><text x="235" y="138" class="weight-text">6</text>
+          <circle cx="30" cy="95" r="14" class="node"/><text x="30" y="95" class="node-text">0</text>
+          <circle cx="95" cy="35" r="14" class="node"/><text x="95" y="35" class="node-text">1</text>
+          <circle cx="95" cy="155" r="14" class="node"/><text x="95" y="155" class="node-text">5</text>
+          <circle cx="145" cy="95" r="14" class="node"/><text x="145" y="95" class="node-text">6</text>
+          <circle cx="195" cy="35" r="14" class="node"/><text x="195" y="35" class="node-text">2</text>
+          <circle cx="195" cy="155" r="14" class="node"/><text x="195" y="155" class="node-text">4</text>
+          <circle cx="260" cy="95" r="14" class="node"/><text x="260" y="95" class="node-text">3</text>
+        </svg>
+      </div>
+
+      <div class="svg-card">
+        <div>Resulting MST (Total Weight = 21) <span class="cite">[span_130](start_span)[span_130](end_span)[span_131](start_span)[span_131](end_span)</span></div>
+        <svg width="290" height="190" viewBox="0 0 290 190">
+          <line x1="30" y1="95" x2="95" y2="35" class="edge-mst"/><text x="52" y="55" class="weight-text">2</text>
+          <line x1="30" y1="95" x2="95" y2="155" class="edge-mst"/><text x="52" y="140" class="weight-text">3</text>
+          <line x1="95" y1="155" x2="195" y2="155" class="edge-mst"/><text x="145" y="172" class="weight-text">5</text>
+          <line x1="195" y1="35" x2="145" y2="95" class="edge-mst"/><text x="160" y="62" class="weight-text">1</text>
+          <line x1="145" y1="95" x2="260" y2="95" class="edge-mst"/><text x="200" y="88" class="weight-text">4</text>
+          <line x1="195" y1="155" x2="260" y2="95" class="edge-mst"/><text x="235" y="138" class="weight-text">6</text>
+          <circle cx="30" cy="95" r="14" class="node"/><text x="30" y="95" class="node-text">0</text>
+          <circle cx="95" cy="35" r="14" class="node"/><text x="95" y="35" class="node-text">1</text>
+          <circle cx="95" cy="155" r="14" class="node"/><text x="95" y="155" class="node-text">5</text>
+          <circle cx="145" cy="95" r="14" class="node"/><text x="145" y="95" class="node-text">6</text>
+          <circle cx="195" cy="35" r="14" class="node"/><text x="195" y="35" class="node-text">2</text>
+          <circle cx="195" cy="155" r="14" class="node"/><text x="195" y="155" class="node-text">4</text>
+          <circle cx="260" cy="95" r="14" class="node"/><text x="260" y="95" class="node-text">3</text>
+        </svg>
+      </div>
+    </div>
+    <p>Disjoint Sets Trace: {0}{1}{2}{3}{4}{5}{6} → {0}{1}{2,6}{3}{4}{5} → {0,1}{2,6}{3}{4}{5} → {0,1,5}{2,6}{3}{4} → {0,1,5}{2,3,6}{4} → {0,1,4,5}{2,3,6} → {0,1,2,3,4,5,6} <span class="cite">[span_132](start_span)[span_132](end_span)[span_133](start_span)[span_133](end_span)</span>. Total Weight = 1 + 2 + 3 + 4 + 5 + 6 = 21 <span class="cite">[span_134](start_span)[span_134](end_span)[span_135](start_span)[span_135](end_span)</span>.</p>
+
+    <!-- KRUSKAL PROBLEM 3 VISUALS (Page 22, 23 / 47, 49) -->
+    <p>Solved Problem 3 (Pages 22–23 — Vertices 1 to 7) <span class="cite">[span_136](start_span)[span_136](end_span)[span_137](start_span)[span_137](end_span)[span_138](start_span)[span_138](end_span)[span_139](start_span)[span_139](end_span)</span>:</p>
+    <div class="svg-container">
+      <div class="svg-card">
+        <div>Given Graph (Vertices 1..7) <span class="cite">[span_140](start_span)[span_140](end_span)[span_141](start_span)[span_141](end_span)</span></div>
+        <svg width="290" height="190" viewBox="0 0 290 190">
+          <line x1="30" y1="95" x2="90" y2="35" class="edge"/><text x="45" y="58" class="weight-text">10</text>
+          <line x1="90" y1="35" x2="200" y2="35" class="edge"/><text x="145" y="27" class="weight-text">28</text>
+          <line x1="30" y1="95" x2="90" y2="155" class="edge"/><text x="45" y="138" class="weight-text">25</text>
+          <line x1="90" y1="155" x2="145" y2="95" class="edge"/><text x="102" y="122" class="weight-text">24</text>
+          <line x1="200" y1="35" x2="145" y2="95" class="edge"/><text x="155" y="62" class="weight-text">14</text>
+          <line x1="145" y1="95" x2="200" y2="155" class="edge"/><text x="177" y="125" class="weight-text">18</text>
+          <line x1="90" y1="155" x2="200" y2="155" class="edge"/><text x="145" y="172" class="weight-text">22</text>
+          <line x1="200" y1="35" x2="260" y2="95" class="edge"/><text x="235" y="58" class="weight-text">16</text>
+          <line x1="200" y1="155" x2="260" y2="95" class="edge"/><text x="235" y="138" class="weight-text">12</text>
+          <circle cx="30" cy="95" r="14" class="node"/><text x="30" y="95" class="node-text">6</text>
+          <circle cx="90" cy="35" r="14" class="node"/><text x="90" y="35" class="node-text">1</text>
+          <circle cx="90" cy="155" r="14" class="node"/><text x="90" y="155" class="node-text">5</text>
+          <circle cx="145" cy="95" r="14" class="node"/><text x="145" y="95" class="node-text">7</text>
+          <circle cx="200" cy="35" r="14" class="node"/><text x="200" y="35" class="node-text">2</text>
+          <circle cx="200" cy="155" r="14" class="node"/><text x="200" y="155" class="node-text">4</text>
+          <circle cx="260" cy="95" r="14" class="node"/><text x="260" y="95" class="node-text">3</text>
+        </svg>
+      </div>
+
+      <div class="svg-card">
+        <div>Final MST (Total Cost = 99) <span class="cite">[span_142](start_span)[span_142](end_span)[span_143](start_span)[span_143](end_span)</span></div>
+        <svg width="290" height="190" viewBox="0 0 290 190">
+          <line x1="30" y1="95" x2="90" y2="35" class="edge-mst"/><text x="45" y="58" class="weight-text">10</text>
+          <line x1="30" y1="95" x2="90" y2="155" class="edge-mst"/><text x="45" y="138" class="weight-text">25</text>
+          <line x1="200" y1="35" x2="145" y2="95" class="edge-mst"/><text x="155" y="62" class="weight-text">14</text>
+          <line x1="90" y1="155" x2="200" y2="155" class="edge-mst"/><text x="145" y="172" class="weight-text">22</text>
+          <line x1="200" y1="35" x2="260" y2="95" class="edge-mst"/><text x="235" y="58" class="weight-text">16</text>
+          <line x1="200" y1="155" x2="260" y2="95" class="edge-mst"/><text x="235" y="138" class="weight-text">12</text>
+          <circle cx="30" cy="95" r="14" class="node"/><text x="30" y="95" class="node-text">6</text>
+          <circle cx="90" cy="35" r="14" class="node"/><text x="90" y="35" class="node-text">1</text>
+          <circle cx="90" cy="155" r="14" class="node"/><text x="90" y="155" class="node-text">5</text>
+          <circle cx="145" cy="95" r="14" class="node"/><text x="145" y="95" class="node-text">7</text>
+          <circle cx="200" cy="35" r="14" class="node"/><text x="200" y="35" class="node-text">2</text>
+          <circle cx="200" cy="155" r="14" class="node"/><text x="200" y="155" class="node-text">4</text>
+          <circle cx="260" cy="95" r="14" class="node"/><text x="260" y="95" class="node-text">3</text>
+        </svg>
+      </div>
+    </div>
+    <p>Disjoint Sets Trace: {1,6}{2}{3}{4}{5}{7} → {1,6}{2}{3,4}{5}{7} → {1,6}{2,7}{3,4}{5} → {1,6}{2,3,4,7}{5} → {1,6}{2,3,4,5,7} → {1,2,3,4,5,6,7} <span class="cite">[span_144](start_span)[span_144](end_span)[span_145](start_span)[span_145](end_span)[span_146](start_span)[span_146](end_span)[span_147](start_span)[span_147](end_span)</span>. Total Cost = 10 + 12 + 14 + 16 + 22 + 25 = 99 <span class="cite">[span_148](start_span)[span_148](end_span)[span_149](start_span)[span_149](end_span)</span>.</p>
+  </div>
+
+  <!-- ==================== FRACTIONAL KNAPSACK ==================== -->
+  <h3>6. Fractional Knapsack Problem &amp; Tables</h3>
+  <div class="from-pdf">
+    <p>We are given n objects and a knapsack (bag) of capacity m <span class="cite">[span_150](start_span)[span_150](end_span)[span_151](start_span)[span_151](end_span)</span>. The object i has weight w<sub>i</sub> and a profit P<sub>i</sub> <span class="cite">[span_152](start_span)[span_152](end_span)[span_153](start_span)[span_153](end_span)</span>. If a fraction x<sub>i</sub> is placed into the knapsack, then a profit P<sub>i</sub>x<sub>i</sub> is obtained <span class="cite">[span_154](start_span)[span_154](end_span)[span_155](start_span)[span_155](end_span)</span>. The objective is to obtain an optimal solution of the knapsack that maximizes the total profit earned, while the total weight of all chosen objects should not exceed m <span class="cite">[span_156](start_span)[span_156](end_span)[span_157](start_span)[span_157](end_span)</span>.</p>
+    <p>Maximize ∑<sub>i=1..n</sub> P<sub>i</sub>x<sub>i</sub> --- (1), subject to ∑<sub>i=1..n</sub> w<sub>i</sub>x<sub>i</sub> ≤ m --- (2), and 0 ≤ x<sub>i</sub> ≤ 1, 1 ≤ i ≤ n --- (3) <span class="cite">[span_158](start_span)[span_158](end_span)[span_159](start_span)[span_159](end_span)</span>. A feasible solution satisfies equations (2) &amp; (3); an optimal solution is a feasible solution that satisfies equation (1) <span class="cite">[span_160](start_span)[span_160](end_span)[span_161](start_span)[span_161](end_span)</span>.</p>
+
+    <p>Problem 1 (Pages 17–18): n = 7, m = 15, P = {10, 5, 15, 7, 6, 18, 3}, W = {2, 3, 5, 7, 1, 4, 1} <span class="cite">[span_162](start_span)[span_162](end_span)[span_163](start_span)[span_163](end_span)[span_164](start_span)[span_164](end_span)[span_165](start_span)[span_165](end_span)</span>. Ratio P<sub>i</sub>/w<sub>i</sub> = {5, 1.67, 3, 1, 6, 4.5, 3} <span class="cite">[span_166](start_span)[span_166](end_span)[span_167](start_span)[span_167](end_span)</span>. Sorted descending order: I = {5, 1, 6, 3, 7, 2, 4} <span class="cite">[span_168](start_span)[span_168](end_span)[span_169](start_span)[span_169](end_span)</span>.</p>
+    <table class="from-pdf">
+      <thead>
+        <tr><th>Item</th><th>P<sub>i</sub></th><th>w<sub>i</sub></th><th>Taken (x<sub>i</sub>)</th><th>Remaining Capacity (u = u - w<sub>i</sub>)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>5</td><td>6</td><td>1</td><td>1</td><td>14</td></tr>
+        <tr><td>1</td><td>10</td><td>2</td><td>1</td><td>12</td></tr>
+        <tr><td>6</td><td>18</td><td>4</td><td>1</td><td>8</td></tr>
+        <tr><td>3</td><td>15</td><td>5</td><td>1</td><td>3</td></tr>
+        <tr><td>7</td><td>3</td><td>1</td><td>1</td><td>2</td></tr>
+        <tr><td>2</td><td>5</td><td>3</td><td>2/3</td><td>0</td></tr>
+        <tr><td>4</td><td>7</td><td>7</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p>∑ P<sub>i</sub>x<sub>i</sub> = 6(1) + 10(1) + 18(1) + 15(1) + 3(1) + 5(2/3) + 7(0) = 55.33; ∑ w<sub>i</sub>x<sub>i</sub> = 15; x = &lt;1, 2/3, 1, 0, 1, 1, 1&gt; <span class="cite">[span_170](start_span)[span_170](end_span)[span_171](start_span)[span_171](end_span)</span>.</p>
+
+    <p>Problem 2 (Page 16): n = 7, m = 15, P = {5, 10, 15, 7, 8, 9, 4}, w = {1, 3, 5, 4, 1, 3, 2} <span class="cite">[span_172](start_span)[span_172](end_span)[span_173](start_span)[span_173](end_span)</span>. Sorted I = {5, 1, 2, 3, 6, 7, 4} <span class="cite">[span_174](start_span)[span_174](end_span)[span_175](start_span)[span_175](end_span)</span>. ∑ P<sub>i</sub>x<sub>i</sub> = 8(1)+5(1)+10(1)+15(1)+9(1)+4(1) = 51; x = &lt;1, 1, 1, 0, 1, 1, 1&gt; <span class="cite">[span_176](start_span)[span_176](end_span)[span_177](start_span)[span_177](end_span)</span>.</p>
+
+    <p>Problem 3 (Page 13): n = 4, m = 60, P = {280, 100, 120, 120}, w = {40, 10, 20, 24}, P<sub>i</sub>/w<sub>i</sub> = {7, 10, 6, 5} <span class="cite">[span_178](start_span)[span_178](end_span)[span_179](start_span)[span_179](end_span)</span>. Sorted i = {2, 1, 3, 4} <span class="cite">[span_180](start_span)[span_180](end_span)[span_181](start_span)[span_181](end_span)</span>. ∑ P<sub>i</sub>x<sub>i</sub> = 100(1)+280(1)+120(1/2) = 440; ∑ w<sub>i</sub>x<sub>i</sub> = 60; x = &lt;1, 1, 1/2, 0&gt; <span class="cite">[span_182](start_span)[span_182](end_span)[span_183](start_span)[span_183](end_span)</span>.</p>
+  </div>
+
+  <!-- ==================== APPROXIMATION & BIN PACKING ==================== -->
+  <h3>7A. Approximation Algorithm Theory and Bin Packing Problem</h3>
+  <div class="added-ktu">
+    <span class="badge">Added Missing 7-Mark Topic + Visual Diagram (KTU Syllabus)</span>
+    <p>1. Approximation Algorithm Theory:</p>
+    <ul>
+      <li>Purpose: Find near-optimal solutions in polynomial time for NP-Hard optimization problems.</li>
+      <li>Approximation Ratio ρ(n): If C is the algorithm's solution cost and C* is the optimal cost, max(C/C*, C*/C) ≤ ρ(n). (For minimization: C/C* ≤ ρ(n); for maximization: C*/C ≤ ρ(n)).</li>
+      <li>PTAS vs. FPTAS: A PTAS achieves a (1 + ε)-approximation in time polynomial in n; an FPTAS runs in time polynomial in both n and 1/ε.</li>
+    </ul>
+    <p>2. Bin Packing Problem &amp; Heuristics:</p>
+    <ul>
+      <li>Given n items of sizes s₁, ..., sₙ ∈ (0, 1], pack them into the minimum number of unit-capacity (1.0) bins. Lower bound: OPT ≥ ⌈∑ sᵢ⌉.</li>
+      <li>Next Fit (NF): Check only current bin; if it doesn't fit, close it and open a new bin. Bound: NF(I) ≤ 2·OPT - 1.</li>
+      <li>First Fit (FF): Place item in the first bin (scanning B₁, B₂, ...) where it fits. Bound: FF(I) ≤ ⌈1.7·OPT⌉.</li>
+      <li>Best Fit (BF): Place item in the bin that leaves the least remaining empty space. Bound: BF(I) ≤ ⌈1.7·OPT⌉.</li>
+      <li>First Fit Decreasing (FFD): Sort items in decreasing order, then apply First Fit. Bound: FFD(I) ≤ (11/9)·OPT + 4.</li>
+    </ul>
+    <div class="svg-container">
+      <div class="svg-card">
+        <div>Visual Example: Items = {0.8, 0.7, 0.5, 0.4, 0.3, 0.2, 0.1} packed via FFD (3 Bins = Optimal)</div>
+        <svg width="360" height="135" viewBox="0 0 360 135">
+          <!-- Bin 1 -->
+          <rect x="35" y="15" width="70" height="100" fill="#fff" stroke="#111827" stroke-width="2"/>
+          <rect x="37" y="35" width="66" height="78" fill="#bfdbfe" stroke="#1d4ed8"/><text x="70" y="75" class="node-text">0.8</text>
+          <rect x="37" y="17" width="66" height="18" fill="#93c5fd" stroke="#1d4ed8"/><text x="70" y="26" class="node-text" style="font-size:11px">0.2</text>
+          <text x="70" y="128" class="node-text" style="font-size:12px">Bin 1 (1.0)</text>
+          <!-- Bin 2 -->
+          <rect x="145" y="15" width="70" height="100" fill="#fff" stroke="#111827" stroke-width="2"/>
+          <rect x="147" y="45" width="66" height="68" fill="#bfdbfe" stroke="#1d4ed8"/><text x="180" y="80" class="node-text">0.7</text>
+          <rect x="147" y="17" width="66" height="28" fill="#93c5fd" stroke="#1d4ed8"/><text x="180" y="31" class="node-text" style="font-size:11px">0.3</text>
+          <text x="180" y="128" class="node-text" style="font-size:12px">Bin 2 (1.0)</text>
+          <!-- Bin 3 -->
+          <rect x="255" y="15" width="70" height="100" fill="#fff" stroke="#111827" stroke-width="2"/>
+          <rect x="257" y="65" width="66" height="48" fill="#bfdbfe" stroke="#1d4ed8"/><text x="290" y="90" class="node-text">0.5</text>
+          <rect x="257" y="27" width="66" height="38" fill="#93c5fd" stroke="#1d4ed8"/><text x="290" y="46" class="node-text" style="font-size:11px">0.4</text>
+          <rect x="257" y="17" width="66" height="10" fill="#60a5fa" stroke="#1d4ed8"/><text x="290" y="22" class="node-text" style="font-size:9px">0.1</text>
+          <text x="290" y="128" class="node-text" style="font-size:12px">Bin 3 (1.0)</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== COMPLEXITY CLASSES ==================== -->
+  <h3>7B. [OR] Complexity Classes: P, NP, NP-Hard, and NP-Complete</h3>
+  <div class="from-pdf">
+    <p>There are 4 complexity classes: 1. Class P, 2. Class NP, 3. Class NP-Hard, 4. Class NP-Complete <span class="cite">[span_184](start_span)[span_184](end_span)[span_185](start_span)[span_185](end_span)</span>.</p>
+    <ul>
+      <li>Class P: Consists of those problems that are solvable in polynomial time, expressed as O(n<sup>k</sup>) where n is input size and k is a constant <span class="cite">[span_186](start_span)[span_186](end_span)[span_187](start_span)[span_187](end_span)</span>.
+        <br/>Example — PATH Problem: Given a directed graph G, determine whether a directed path exists from s to t <span class="cite">[span_188](start_span)[span_188](end_span)[span_189](start_span)[span_189](end_span)[span_190](start_span)[span_190](end_span)[span_191](start_span)[span_191](end_span)</span>.
+        <br/>Algorithm: 1. Place a mark on node s and enqueue s into an empty queue <span class="cite">[span_192](start_span)[span_192](end_span)[span_193](start_span)[span_193](end_span)</span>. 2. Repeat Step 3 until the queue is empty <span class="cite">[span_194](start_span)[span_194](end_span)[span_195](start_span)[span_195](end_span)</span>. 3. Dequeue the first element of the queue, mark all unmarked connected neighbors of it, and enqueue those into the queue <span class="cite">[span_196](start_span)[span_196](end_span)[span_197](start_span)[span_197](end_span)</span>. 4. If t is marked then accept, otherwise reject <span class="cite">[span_198](start_span)[span_198](end_span)[span_199](start_span)[span_199](end_span)</span>.
+      </li>
+      <li>Class NP: Problems that have a polynomial-time verification algorithm <span class="cite">[span_200](start_span)[span_200](end_span)[span_201](start_span)[span_201](end_span)[span_202](start_span)[span_202](end_span)</span>.
+        <br/>Example — Hamiltonian Path Problem (HAM-PATH): Test whether a directed graph contains a Hamiltonian path (a directed path that goes through each node exactly once) connecting s to t <span class="cite">[span_203](start_span)[span_203](end_span)[span_204](start_span)[span_204](end_span)[span_205](start_span)[span_205](end_span)</span>.
+        <br/>Verification Algorithm (Inputs: G, nodes s and t, path P: p₁, p₂, ..., pₘ): 1. Check whether s = p₁ and t = pₘ; if either fails then reject <span class="cite">[span_206](start_span)[span_206](end_span)[span_207](start_span)[span_207](end_span)[span_208](start_span)[span_208](end_span)[span_209](start_span)[span_209](end_span)</span>. 2. Check for repetition of nodes in path P; if any is found then reject <span class="cite">[span_210](start_span)[span_210](end_span)[span_211](start_span)[span_211](end_span)</span>. 3. For each i, check whether &lt;pᵢ, pᵢ₊₁&gt; is an edge in G; if any edge is missing then reject <span class="cite">[span_212](start_span)[span_212](end_span)[span_213](start_span)[span_213](end_span)</span>. 4. If all tests have been passed, then accept <span class="cite">[span_214](start_span)[span_214](end_span)[span_215](start_span)[span_215](end_span)</span>.
+      </li>
+      <li>Class NP-Hard &amp; Polynomial-Time Reduction: Consider decision problem A and decision problem B <span class="cite">[span_216](start_span)[span_216](end_span)[span_217](start_span)[span_217](end_span)</span>. Suppose we have a procedure that transforms any instance α of A into some instance β of B such that: (1) The transformation takes polynomial time, and (2) The answer is the same (answer for α is Yes iff answer for β is Yes) <span class="cite">[span_218](start_span)[span_218](end_span)[span_219](start_span)[span_219](end_span)</span>. Such a procedure is called a polynomial-time reduction <span class="cite">[span_220](start_span)[span_220](end_span)[span_221](start_span)[span_221](end_span)</span>. A decision problem is NP-Hard if every problem in NP is polynomial-time reducible to it <span class="cite">[span_222](start_span)[span_222](end_span)[span_223](start_span)[span_223](end_span)</span>.</li>
+      <li>Class NP-Complete: If a problem is in NP and it is NP-Hard, then that problem is NP-Complete <span class="cite">[span_224](start_span)[span_224](end_span)[span_225](start_span)[span_225](end_span)</span>. Examples: Circuit Satisfiability (CIRCUIT-SAT), SAT, and 3-CNF-SAT (AND of clauses, where each clause is an OR of 3 distinct literals) <span class="cite">[span_226](start_span)[span_226](end_span)[span_227](start_span)[span_227](end_span)[span_228](start_span)[span_228](end_span)[span_229](start_span)[span_229](end_span)</span>.</li>
+    </ul>
+
+    <!-- Polynomial-Time Reduction Block Diagram from Page 43 / 74 -->
+    <div class="svg-container">
+      <div class="svg-card">
+        <div>Polynomial-Time Reduction Block Diagram (from PDF Page 43) <span class="cite">[span_230](start_span)[span_230](end_span)[span_231](start_span)[span_231](end_span)</span></div>
+        <svg width="620" height="125" viewBox="0 0 620 125">
+          <!-- Outer box: Algorithm to decide A -->
+          <rect x="90" y="10" width="430" height="105" rx="6" fill="#f9fafb" stroke="#111827" stroke-width="1.8" stroke-dasharray="5,4"/>
+          <text x="305" y="26" class="node-text" style="font-size:12px">Polynomial-Time Algorithm to Decide A</text>
+
+          <!-- Input alpha -->
+          <text x="42" y="62" class="node-text" style="font-size:12px">Instance α</text>
+          <text x="42" y="76" class="node-text" style="font-size:11px">of A</text>
+          <line x1="78" y1="68" x2="112" y2="68" class="edge" marker-end="url(#arrow)"/>
+
+          <!-- Box 1: Reduction -->
+          <rect x="115" y="42" width="155" height="52" rx="4" fill="#fff" stroke="#111827" stroke-width="1.8"/>
+          <text x="192" y="62" class="node-text" style="font-size:11.5px">Polynomial-Time</text>
+          <text x="192" y="78" class="node-text" style="font-size:11.5px">Reduction Algorithm</text>
+
+          <!-- Middle arrow beta -->
+          <line x1="270" y1="68" x2="335" y2="68" class="edge" marker-end="url(#arrow)"/>
+          <text x="302" y="58" class="node-text" style="font-size:12px">β</text>
+
+          <!-- Box 2: Decide B -->
+          <rect x="338" y="42" width="160" height="52" rx="4" fill="#fff" stroke="#111827" stroke-width="1.8"/>
+          <text x="418" y="62" class="node-text" style="font-size:11.5px">Polynomial-Time</text>
+          <text x="418" y="78" class="node-text" style="font-size:11.5px">Algorithm to Decide B</text>
+
+          <!-- Output Yes / No -->
+          <line x1="498" y1="56" x2="565" y2="45" class="edge" marker-end="url(#arrow)"/>
+          <line x1="498" y1="80" x2="565" y2="91" class="edge" marker-end="url(#arrow)"/>
+          <text x="588" y="45" class="node-text" style="font-size:12px">Yes</text>
+          <text x="588" y="92" class="node-text" style="font-size:12px">No</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PART C: EXTRA / UNKNOWN QUESTIONS ==================== -->
+  <h2>PART C: Extra / "Unknown" Questions &amp; Diagrams in Uploaded PDF</h2>
+
+  <h3>Unknown Question 1: Floyd-Warshall Solved Graph Problems (All 3 Graphs &amp; Matrices)</h3>
+  <div class="from-pdf">
+    <p>Steps: 1. Remove all self-loops and parallel edges (keeping lowest weight edge) of the given graph <span class="cite">[span_232](start_span)[span_232](end_span)[span_233](start_span)[span_233](end_span)</span>. 2. Write the initial adjacency matrix D⁰ <span class="cite">[span_234](start_span)[span_234](end_span)[span_235](start_span)[span_235](end_span)</span>. 3. Find D¹..Dⁿ using Dᵏ[i,j] = min{Dᵏ⁻¹[i,j], Dᵏ⁻¹[i,k] + Dᵏ⁻¹[k,j]} <span class="cite">[span_236](start_span)[span_236](end_span)[span_237](start_span)[span_237](end_span)[span_238](start_span)[span_238](end_span)[span_239](start_span)[span_239](end_span)</span>.</p>
+
+    <!-- FLOYD WARSHALL GRAPH 1 (Pages 7, 8, 10, 11) -->
+    <p>Problem A (Pages 7, 8, 10, 11 — 4-Vertex Directed Graph with Negative Weight) <span class="cite">[span_240](start_span)[span_240](end_span)[span_241](start_span)[span_241](end_span)[span_242](start_span)[span_242](end_span)[span_243](start_span)[span_243](end_span)[span_244](start_span)[span_244](end_span)[span_245](start_span)[span_245](end_span)[span_246](start_span)[span_246](end_span)[span_247](start_span)[span_247](end_span)</span>:</p>
+    <div class="svg-container">
+      <div class="svg-card">
+        <div>Directed Graph 1 (Page 11) <span class="cite">[span_248](start_span)[span_248](end_span)[span_249](start_span)[span_249](end_span)</span></div>
+        <svg width="240" height="175" viewBox="0 0 240 175">
+          <!-- Curved 1 -> 2 (9) and 2 -> 1 (6) -->
+          <path d="M 62 32 Q 120 2 178 32" class="edge" marker-end="url(#arrow)"/><text x="120" y="15" class="weight-text">9</text>
+          <path d="M 176 46 Q 120 68 64 46" class="edge" marker-end="url(#arrow)"/><text x="120" y="70" class="weight-text">6</text>
+          <!-- 1 -> 3 (-4) -->
+          <line x1="50" y1="56" x2="50" y2="128" class="edge" marker-end="url(#arrow)"/><text x="28" y="95" class="weight-text">-4</text>
+          <!-- 3 -> 2 (5) -->
+          <line x1="62" y1="134" x2="178" y2="52" class="edge" marker-end="url(#arrow)"/><text x="115" y="92" class="weight-text">5</text>
+          <!-- 2 -> 4 (2) -->
+          <line x1="190" y1="56" x2="190" y2="128" class="edge" marker-end="url(#arrow)"/><text x="204" y="95" class="weight-text">2</text>
+          <!-- 4 -> 3 (1) -->
+          <line x1="174" y1="145" x2="66" y2="145" class="edge" marker-end="url(#arrow)"/><text x="120" y="162" class="weight-text">1</text>
+          <!-- Nodes -->
+          <circle cx="50" cy="40" r="15" class="node"/><text x="50" y="40" class="node-text">1</text>
+          <circle cx="190" cy="40" r="15" class="node"/><text x="190" y="40" class="node-text">2</text>
+          <circle cx="50" cy="145" r="15" class="node"/><text x="50" y="145" class="node-text">3</text>
+          <circle cx="190" cy="145" r="15" class="node"/><text x="190" y="145" class="node-text">4</text>
+        </svg>
+      </div>
+
+      <div class="matrix-grid">
+        <div class="matrix-box">D⁰ <span class="cite">[span_250](start_span)[span_250](end_span)</span>
+          <table><tr><td>0</td><td>9</td><td>-4</td><td>∞</td></tr><tr><td>6</td><td>0</td><td>∞</td><td>2</td></tr><tr><td>∞</td><td>5</td><td>0</td><td>∞</td></tr><tr><td>∞</td><td>∞</td><td>1</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">D¹ <span class="cite">[span_251](start_span)[span_251](end_span)[span_252](start_span)[span_252](end_span)</span>
+          <table><tr><td>0</td><td>9</td><td>-4</td><td>∞</td></tr><tr><td>6</td><td>0</td><td>2</td><td>2</td></tr><tr><td>∞</td><td>5</td><td>0</td><td>∞</td></tr><tr><td>∞</td><td>∞</td><td>1</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">D² <span class="cite">[span_253](start_span)[span_253](end_span)</span>
+          <table><tr><td>0</td><td>9</td><td>-4</td><td>11</td></tr><tr><td>6</td><td>0</td><td>2</td><td>2</td></tr><tr><td>11</td><td>5</td><td>0</td><td>7</td></tr><tr><td>∞</td><td>∞</td><td>1</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">Final D³ = D⁴ <span class="cite">[span_254](start_span)[span_254](end_span)[span_255](start_span)[span_255](end_span)</span>
+          <table><tr><td>0</td><td>1</td><td>-4</td><td>7</td></tr><tr><td>3</td><td>0</td><td>2</td><td>2</td></tr><tr><td>1</td><td>5</td><td>0</td><td>7</td></tr><tr><td>2</td><td>6</td><td>1</td><td>0</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOYD WARSHALL GRAPH 2 (Page 2 / 63) -->
+    <p>Problem B (Page 2 — 3-Vertex Directed Graph A, B, C as 1, 2, 3) <span class="cite">[span_256](start_span)[span_256](end_span)[span_257](start_span)[span_257](end_span)</span>:</p>
+    <div class="svg-container">
+      <div class="svg-card">
+        <div>Directed Graph 2 (Page 2) <span class="cite">[span_258](start_span)[span_258](end_span)[span_259](start_span)[span_259](end_span)</span></div>
+        <svg width="240" height="170" viewBox="0 0 240 170">
+          <!-- A(1) to B(2) = 1, B to A = 9 -->
+          <path d="M 105 32 Q 45 45 45 108" class="edge" marker-end="url(#arrow)"/><text x="52" y="55" class="weight-text">1</text>
+          <path d="M 58 112 Q 95 85 112 46" class="edge" marker-end="url(#arrow)"/><text x="92" y="88" class="weight-text">9</text>
+          <!-- A(1) to C(3) = 8, C to A = 1 -->
+          <line x1="132" y1="44" x2="182" y2="110" class="edge" marker-end="url(#arrow)"/><text x="150" y="88" class="weight-text">8</text>
+          <path d="M 195 108 Q 195 45 136 32" class="edge" marker-end="url(#arrow)"/><text x="188" y="55" class="weight-text">1</text>
+          <!-- B(2) to C(3) = 5, C to B = 7 -->
+          <line x1="62" y1="125" x2="174" y2="125" class="edge" marker-end="url(#arrow)"/><text x="120" y="120" class="weight-text">5</text>
+          <path d="M 180 138 Q 120 172 60 138" class="edge" marker-end="url(#arrow)"/><text x="120" y="165" class="weight-text">7</text>
+          <!-- Nodes -->
+          <circle cx="120" cy="32" r="15" class="node"/><text x="120" y="32" class="node-text">A</text>
+          <circle cx="46" cy="125" r="15" class="node"/><text x="46" y="125" class="node-text">B</text>
+          <circle cx="192" cy="125" r="15" class="node"/><text x="192" y="125" class="node-text">C</text>
+        </svg>
+      </div>
+
+      <div class="matrix-grid">
+        <div class="matrix-box">D⁰ <span class="cite">[span_260](start_span)[span_260](end_span)</span>
+          <table><tr><td>0</td><td>1</td><td>8</td></tr><tr><td>9</td><td>0</td><td>5</td></tr><tr><td>1</td><td>7</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">D¹ <span class="cite">[span_261](start_span)[span_261](end_span)</span>
+          <table><tr><td>0</td><td>1</td><td>8</td></tr><tr><td>9</td><td>0</td><td>5</td></tr><tr><td>1</td><td>2</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">D² <span class="cite">[span_262](start_span)[span_262](end_span)</span>
+          <table><tr><td>0</td><td>1</td><td>6</td></tr><tr><td>9</td><td>0</td><td>5</td></tr><tr><td>1</td><td>2</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">Final D³ <span class="cite">[span_263](start_span)[span_263](end_span)</span>
+          <table><tr><td>0</td><td>1</td><td>6</td></tr><tr><td>6</td><td>0</td><td>5</td></tr><tr><td>1</td><td>2</td><td>0</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOYD WARSHALL GRAPH 3 (Pages 1, 3 / 64, 65) -->
+    <p>Problem C (Pages 1 &amp; 3 — 4-Vertex Directed Graph) <span class="cite">[span_264](start_span)[span_264](end_span)[span_265](start_span)[span_265](end_span)[span_266](start_span)[span_266](end_span)[span_267](start_span)[span_267](end_span)</span>:</p>
+    <div class="svg-container">
+      <div class="svg-card">
+        <div>Directed Graph 3 (Page 1) <span class="cite">[span_268](start_span)[span_268](end_span)[span_269](start_span)[span_269](end_span)</span></div>
+        <svg width="240" height="180" viewBox="0 0 240 180">
+          <!-- Outer curve 3 -> 1 (weight 4) -->
+          <path d="M 118 158 C 5 165 5 20 116 26" class="edge" marker-end="url(#arrow)"/><text x="32" y="45" class="weight-text">4</text>
+          <!-- 1 -> 4 (1) -->
+          <line x1="124" y1="38" x2="78" y2="88" class="edge" marker-end="url(#arrow)"/><text x="92" y="60" class="weight-text">1</text>
+          <!-- 1 -> 2 (8) -->
+          <line x1="144" y1="38" x2="192" y2="88" class="edge" marker-end="url(#arrow)"/><text x="176" y="60" class="weight-text">8</text>
+          <!-- 4 -> 2 (2) -->
+          <line x1="84" y1="100" x2="184" y2="100" class="edge" marker-end="url(#arrow)"/><text x="134" y="94" class="weight-text">2</text>
+          <!-- 4 -> 3 (9) -->
+          <line x1="78" y1="112" x2="122" y2="146" class="edge" marker-end="url(#arrow)"/><text x="88" y="140" class="weight-text">9</text>
+          <!-- 2 -> 3 (1) -->
+          <line x1="192" y1="112" x2="148" y2="146" class="edge" marker-end="url(#arrow)"/><text x="178" y="140" class="weight-text">1</text>
+          <!-- Nodes -->
+          <circle cx="134" cy="28" r="14" class="node"/><text x="134" y="28" class="node-text">1</text>
+          <circle cx="202" cy="100" r="14" class="node"/><text x="202" y="100" class="node-text">2</text>
+          <circle cx="134" cy="155" r="14" class="node"/><text x="134" y="155" class="node-text">3</text>
+          <circle cx="68" cy="100" r="14" class="node"/><text x="68" y="100" class="node-text">4</text>
+        </svg>
+      </div>
+
+      <div class="matrix-grid">
+        <div class="matrix-box">D⁰ <span class="cite">[span_270](start_span)[span_270](end_span)</span>
+          <table><tr><td>0</td><td>8</td><td>∞</td><td>1</td></tr><tr><td>∞</td><td>0</td><td>1</td><td>∞</td></tr><tr><td>4</td><td>∞</td><td>0</td><td>∞</td></tr><tr><td>∞</td><td>2</td><td>9</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">D¹ <span class="cite">[span_271](start_span)[span_271](end_span)</span>
+          <table><tr><td>0</td><td>8</td><td>∞</td><td>1</td></tr><tr><td>∞</td><td>0</td><td>1</td><td>∞</td></tr><tr><td>4</td><td>12</td><td>0</td><td>5</td></tr><tr><td>∞</td><td>2</td><td>9</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">D² <span class="cite">[span_272](start_span)[span_272](end_span)</span>
+          <table><tr><td>0</td><td>8</td><td>9</td><td>1</td></tr><tr><td>∞</td><td>0</td><td>1</td><td>∞</td></tr><tr><td>4</td><td>12</td><td>0</td><td>5</td></tr><tr><td>∞</td><td>2</td><td>3</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">D³ <span class="cite">[span_273](start_span)[span_273](end_span)</span>
+          <table><tr><td>0</td><td>8</td><td>9</td><td>1</td></tr><tr><td>5</td><td>0</td><td>1</td><td>6</td></tr><tr><td>4</td><td>12</td><td>0</td><td>5</td></tr><tr><td>7</td><td>2</td><td>3</td><td>0</td></tr></table>
+        </div>
+        <div class="matrix-box">Final D⁴ <span class="cite">[span_274](start_span)[span_274](end_span)</span>
+          <table><tr><td>0</td><td>3</td><td>4</td><td>1</td></tr><tr><td>5</td><td>0</td><td>1</td><td>6</td></tr><tr><td>4</td><td>7</td><td>0</td><td>5</td></tr><tr><td>7</td><td>2</td><td>3</td><td>0</td></tr></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MATRIX CHAIN MULTIPLICATION ==================== -->
+  <h3>Unknown Question 2: Matrix Chain Multiplication &amp; Triangular M / S Tables (Pages 4, 5, 6, 9)</h3>
+  <div class="from-pdf">
+    <p>Given: A₁: 4×10 (P₀×P₁), A₂: 10×3 (P₁×P₂), A₃: 3×12 (P₂×P₃), A₄: 12×20 (P₃×P₄), A₅: 20×7 (P₄×P₅) <span class="cite">[span_275](start_span)[span_275](end_span)[span_276](start_span)[span_276](end_span)</span>.</p>
+    <div class="matrix-grid">
+      <div class="matrix-box">
+        <div>M Table (Minimum Cost m[i, j]) <span class="cite">[span_277](start_span)[span_277](end_span)[span_278](start_span)[span_278](end_span)</span></div>
+        <table>
+          <thead><tr><th>i \ j</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+          <tbody>
+            <tr><th>1</th><td>0</td><td>120</td><td>264</td><td>1080</td><td>1344</td></tr>
+            <tr><th>2</th><td></td><td>0</td><td>360</td><td>1320</td><td>1350</td></tr>
+            <tr><th>3</th><td></td><td></td><td>0</td><td>720</td><td>1140</td></tr>
+            <tr><th>4</th><td></td><td></td><td></td><td>0</td><td>1680</td></tr>
+            <tr><th>5</th><td></td><td></td><td></td><td></td><td>0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="matrix-box">
+        <div>S Table (Optimal Split Index k) <span class="cite">[span_279](start_span)[span_279](end_span)[span_280](start_span)[span_280](end_span)</span></div>
+        <table>
+          <thead><tr><th>i \ j</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+          <tbody>
+            <tr><th>1</th><td>0</td><td>1</td><td>2</td><td>2</td><td>2</td></tr>
+            <tr><th>2</th><td></td><td>0</td><td>2</td><td>2</td><td>2</td></tr>
+            <tr><th>3</th><td></td><td></td><td>0</td><td>3</td><td>4</td></tr>
+            <tr><th>4</th><td></td><td></td><td></td><td>0</td><td>4</td></tr>
+            <tr><th>5</th><td></td><td></td><td></td><td></td><td>0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <ul>
+      <li>Length 2: m[1,2] = 120 (k=1); m[2,3] = 360 (k=2); m[3,4] = 720 (k=3); m[4,5] = 1680 (k=4) <span class="cite">[span_281](start_span)[span_281](end_span)[span_282](start_span)[span_282](end_span)</span>.</li>
+      <li>Length 3: m[1,3] = min{840 (k=1), 264 (k=2)} = 264; m[2,4] = min{1320 (k=2), 2760 (k=3)} = 1320; m[3,5] = min{1932 (k=3), 1140 (k=4)} = 1140 <span class="cite">[span_283](start_span)[span_283](end_span)</span>.</li>
+      <li>Length 4: m[1,4] = min{2120 (k=1), 1080 (k=2), 1224 (k=3)} = 1080; m[2,5] = min{1350 (k=2), 2880 (k=3), 2720 (k=4)} = 1350 <span class="cite">[span_284](start_span)[span_284](end_span)</span>.</li>
+      <li>Length 5: m[1,5] = min{1630 (k=1), 1344 (k=2), 2280 (k=3), 1640 (k=4)} = 1344 <span class="cite">[span_285](start_span)[span_285](end_span)[span_286](start_span)[span_286](end_span)</span>.</li>
+      <li>Optimal Parenthesization: Since s[1,5] = 2 and s[3,5] = 4 ⇒ ((A₁ · A₂)((A₃ · A₄) · A₅)) <span class="cite">[span_287](start_span)[span_287](end_span)[span_288](start_span)[span_288](end_span)</span>.</li>
+    </ul>
+  </div>
+
+  <h3>Unknown Question 3: Comparison of Divide-and-Conquer vs. Dynamic Programming &amp; Time Complexity Order</h3>
+  <div class="from-pdf">
+    <ul>
+      <li>Both techniques split their input into subproblems, find the solution of subproblems, and obtain larger solutions by combining the smaller ones <span class="cite">[span_289](start_span)[span_289](end_span)[span_290](start_span)[span_290](end_span)</span>.</li>
+      <li>Divide-and-conquer splits its input at pre-specified points (most probably in the middle). DP splits its input at every possible split point rather than at pre-specified points, and after trying all split points, it determines which split point is optimal <span class="cite">[span_291](start_span)[span_291](end_span)[span_292](start_span)[span_292](end_span)</span>.</li>
+      <li>Divide-and-conquer partitions the problem into independent subproblems. DP is used when the subproblems are not independent (overlapping subproblems) <span class="cite">[span_293](start_span)[span_293](end_span)[span_294](start_span)[span_294](end_span)</span>.</li>
+      <li>Arrange functions in increasing order of time complexity (2ⁿ, n<sup>log n</sup>, n², n<sup>√n</sup>): Substitute large value (10,000) ⇒ n² &lt; n<sup>log n</sup> &lt; n<sup>√n</sup> &lt; 2ⁿ <span class="cite">[span_295](start_span)[span_295](end_span)[span_296](start_span)[span_296](end_span)</span>.</li>
+    </ul>
+  </div>
+
+</body>
+</html>
