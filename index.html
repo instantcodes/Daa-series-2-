@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algorithm Analysis & Design - Complete Exam Study Sheet</title>
+  <style>
+    :root {
+      --text: #111827;
+      --border: #d1d5db;
+      --bg-code: #f3f4f6;
+      --accent: #1d4ed8;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.55;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+      background: #ffffff;
+    }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 12px 18px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+    .btn-print {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-print:hover {
+      background: #1e40af;
+    }
+    h1 {
+      font-size: 22px;
+      border-bottom: 2px solid #111827;
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+    h2 {
+      font-size: 18px;
+      background: #111827;
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 4px;
+      margin-top: 28px;
+    }
+    h3 {
+      font-size: 16px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      margin-top: 22px;
+    }
+    /* Content from uploaded PDF is strictly BOLD */
+    .from-pdf {
+      font-weight: 700;
+    }
+    /* Added KTU syllabus material is regular weight */
+    .added-ktu {
+      font-weight: 400;
+      background: #fafafa;
+      border-left: 3px solid #6b7280;
+      padding: 8px 14px;
+      margin: 10px 0;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: #e5e7eb;
+      color: #374151;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 13px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13.5px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      text-align: center;
+    }
+    th {
+      background: #f3f4f6;
+    }
+    ul, ol {
+      margin: 6px 0 12px 22px;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+    @media print {
+      .toolbar {
+        display: none !important;
+      }
+      body {
+        padding: 0;
+        max-width: 100%;
+      }
+      h2, h3 {
+        page-break-after: avoid;
+      }
+      pre, table, .added-ktu {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <div>
+      <strong>Legend:</strong> <span class="from-pdf">Bold Text = From Your Uploaded PDF</span> | <span>Regular Text = Added Missing KTU Material</span>
+    </div>
+    <button class="btn-print" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <h1>Design & Analysis of Algorithms — Complete Question & Answer Bank</h1>
+
+  <!-- ==================== PART A: 3 MARKS ==================== -->
+  <h2>PART A: 3 Marks Questions</h2>
+
+  <h3>1. Floyd-Warshall Algorithm and its Complexity Analysis</h3>
+  <div class="from-pdf">
+    <p>In the All Pairs Shortest Path problem, we find the shortest distance between every pair of vertices in a given weighted, directed graph. Negative edge weights are also allowed. The Floyd-Warshall algorithm is for solving the all pairs shortest path problem. As a result of this algorithm, it will generate a matrix that represents the minimum distance from any node to all other nodes in the graph.</p>
+    <pre class="from-pdf">Algorithm FloydWarshall(cost[][], n)
+for i = 1 to n do
+    for j = 1 to n do
+        D⁰[i][j] = cost[i][j]
+for k = 1 to n do
+    for i = 1 to n do
+        for j = 1 to n do
+            Dᵏ[i, j] = min{ Dᵏ⁻¹[i, j], Dᵏ⁻¹[i, k] + Dᵏ⁻¹[k, j] }
+Return D</pre>
+  </div>
+
+  <div class="added-ktu">
+    <span class="badge">Added Missing Topic — Complexity Analysis (KTU Syllabus)</span>
+    <ul>
+      <li>Time Complexity:
+        <ul>
+          <li>Initialization: Two nested loops (<code>i = 1 to n</code>, <code>j = 1 to n</code>) copy the adjacency matrix in Θ(n²) time.</li>
+          <li>Main Triple Loop: Three nested loops (<code>k = 1 to n</code>, <code>i = 1 to n</code>, <code>j = 1 to n</code>) each run <em>n</em> times. The inner comparison and addition <code>min{D[i,j], D[i,k] + D[k,j]}</code> takes constant time O(1).</li>
+          <li>Total Operations: ∑<sub>k=1..n</sub> ∑<sub>i=1..n</sub> ∑<sub>j=1..n</sub> O(1) = n × n × n = Θ(n³).</li>
+          <li>Overall Time Complexity: T(n) = Θ(n²) + Θ(n³) = Θ(n³) (or Θ(|V|³)) in best, average, and worst cases.</li>
+        </ul>
+      </li>
+      <li>Space Complexity: Θ(n²) to store the <em>n × n</em> distance matrix D in-place.</li>
+    </ul>
+  </div>
+
+  <h3>2. Steps and Characteristics of Dynamic Programming</h3>
+  <div class="from-pdf">
+    <p>Dynamic Programming (DP) is an algorithm design method that can be used when the solution to a problem can be viewed as the result of a sequence of decisions. It is mainly an optimization technique. Whenever a recursive solution has repeated calls for the same inputs, we can optimize it using dynamic programming. DP solves each subproblem just once and stores the result in a table so that it can be repeatedly retrieved when needed again.</p>
+    <p>Characteristics of Dynamic Programming:</p>
+    <ul>
+      <li>Overlapping Subproblems: Subproblems are smaller versions of the original problem. DP combines solutions to subproblems. It is mainly used where the solution of one subproblem is needed repeatedly. The computed solutions are stored in a table so that they don't have to be recomputed; hence, this technique is needed where overlapping subproblems exist.</li>
+      <li>Optimal Substructure: The given problem has the optimal substructure property if the optimal solution of the given problem can be obtained using optimal solutions of its subproblems.</li>
+    </ul>
+    <p>Steps of Dynamic Programming:</p>
+    <ol>
+      <li>Characterize the structure of an optimal solution.</li>
+      <li>Recursively define the value of an optimal solution.</li>
+      <li>Compute the value of an optimal solution, typically in a bottom-up manner.</li>
+      <li>Construct an optimal solution from the computed information.</li>
+    </ol>
+  </div>
+
+  <h3>3. Control Abstraction of Greedy Strategy</h3>
+  <div class="from-pdf">
+    <p>For a given problem, there are many possible solutions, but only some solutions satisfy the constraint. They are called feasible solutions. Out of these feasible solutions, one solution will provide the best result. It is called the optimal solution. An optimal solution is a solution which is feasible and gives the best result. For a given problem, there can be more than 1 feasible solution, but only 1 optimal solution.</p>
+    <p>If a problem requires either a maximum or minimum result, then that problem is called an optimization problem. The strategies used for solving optimization problems are: Greedy Method, Dynamic Programming, and Branch and Bound.</p>
+    <pre class="from-pdf">Algorithm Greedy(a, n) // a[1:n] contains n inputs
+{
+    solution = ϕ
+    for i = 1 to n do
+    {
+        x = select(a)
+        if feasible(solution, x) then
+            solution = union(solution, x)
+    }
+    return solution
+}</pre>
+    <ul>
+      <li>Select() function: takes an input from the array a[] and assigns it to x.</li>
+      <li>Feasible(): is a boolean-valued function that determines whether x can be included in the solution.</li>
+      <li>Union(): combines x with the solution.</li>
+    </ul>
+  </div>
+
+  <!-- ==================== PART B: 7 MARKS ==================== -->
+  <h2>PART B: 7 Marks Questions</h2>
+
+  <h3>4. Merge Sort Algorithm and its Complexity Analysis</h3>
+  <div class="from-pdf">
+    <pre class="from-pdf">MERGE_SORT(A, p, r)
+if p &lt; r
+    then q ← ⌊(p + r) / 2⌋
+    MERGE_SORT(A, p, q)
+    MERGE_SORT(A, q + 1, r)
+    MERGE(A, p, q, r)
+
+MERGE(A, p, q, r)
+n₁ ← q - p + 1
+n₂ ← r - q
+create arrays L[1 ... n₁ + 1] and R[1 ... n₂ + 1]
+for i ← 1 to n₁
+    L[i] ← A[p + i - 1]
+for j ← 1 to n₂
+    R[j] ← A[q + j]
+L[n₁ + 1] ← ∞
+R[n₂ + 1] ← ∞
+i ← 1
+j ← 1
+for k ← p to r
+    do if L[i] ≤ R[j]
+        A[k] ← L[i]
+        i ← i + 1
+    else
+        A[k] ← R[j]
+        j ← j + 1</pre>
+    <p>Example Trace: [3, 10, 12, 8, 5, 6, 25, 30] → Divide: [3, 10, 12, 8] &amp; [5, 6, 25, 30] → [3, 10], [12, 8], [5, 6], [25, 30] → [3] [10] [12] [8] [5] [6] [25] [30] → Merge: [3, 10], [8, 12], [5, 6], [25, 30] → [3, 8, 10, 12] &amp; [5, 6, 25, 30] → [3, 5, 6, 8, 10, 12, 25, 30].</p>
+    <p>Analysis of Merge Sort:</p>
+    <p>Let T(n) be the running time on a problem of size n. In divide-and-conquer method, the running time T(n) can be described as:</p>
+    <p>T(n) = O(1) if n = 1; and T(n) = aT(n/b) + D(n) + C(n) otherwise, where aT(n/b) means 'a' subproblems each of which is size 1/b of the original. D(n) is the time to divide the problem into subproblems, and C(n) is the time to combine the solutions of the subproblems to obtain the solution of the original problem.</p>
+    <ul>
+      <li>Divide: To divide the array into 2 subarrays, computing the mid value q = (p + r)/2 takes O(1) constant time. Therefore, D(n) = O(1).</li>
+      <li>Conquer: Recursively solve 2 subproblems each of size n/2, which takes 2T(n/2).</li>
+      <li>Combine: The merge procedure on an n-element array takes time O(n). Therefore, C(n) = O(n).</li>
+    </ul>
+    <p>T(n) = 2T(n/2) + O(1) + O(n) ⇒ T(n) = 2T(n/2) + n.</p>
+    <p>Here a = 2, b = 2, log<sub>b</sub>a = log₂2 = 1. Since f(n) = n¹ = Θ(n¹ log⁰n) (k = 1, p = 0), Therefore: T(n) = Θ(n log n).</p>
+  </div>
+
+  <h3>5. Kruskal's Algorithm and Solved Problems</h3>
+  <div class="from-pdf">
+    <p>Spanning Tree: A spanning tree is a subset of an undirected connected graph G = (V, E) which has all of the vertices covered with minimum possible number of edges. A connected graph G can have more than 1 spanning tree. The spanning tree does not have any cycle. Let G = (V, E) be an undirected graph where V is the set of vertices and E is the set of edges. For each edge (u, v) ∈ E, we have a weight w(u, v) specifying the cost to connect u and v. We have to find an acyclic subset T ⊆ E that connects all of the vertices and the total weight w(T) is minimized. Since T is acyclic and connects all of the vertices, it must form a tree called a spanning tree, and the problem of determining the tree T is called the Minimum Spanning Tree problem (MST).</p>
+    <pre class="from-pdf">MST_KRUSKAL(G, w)
+1. A ← ϕ
+2. for each vertex v ∈ V[G]
+3.     do MAKE-SET(v)
+4. Sort the edges of E into non-decreasing order by weight w
+5. for each edge (u, v) ∈ E, taken in non-decreasing order by weight
+6.     do if FIND-SET(u) ≠ FIND-SET(v)
+7.         then A ← A ∪ {(u, v)}
+8.         UNION(u, v)
+9. return A</pre>
+    <ul>
+      <li>Problem 1 (6 Vertices): Edges sorted: (1,4)=1, (1,2)=2, (2,3)=3, (2,4)=3 [Rejected], (1,5)=4, (4,5)=4 [Rejected], (3,4)=5 [Rejected], (2,6)=7, (3,6)=8 [Rejected].
+        <br/>Sets progression: {1}{2}{3}{4}{5}{6} → {1,4}{2}{3}{5}{6} → {1,2,4}{3}{5}{6} → {1,2,3,4}{5}{6} → {1,2,3,4,5}{6} → {1,2,3,4,5,6}.
+        <br/>Total Weight = 1 + 2 + 3 + 4 + 7 = 17.</li>
+      <li>Problem 2 (7 Vertices: 0 to 6): Selected Edges: (2,6)=1, (0,1)=2, (0,5)=3, (3,6)=4, (4,5)=5, (3,4)=6.
+        <br/>Sets progression: {0}{1}{2}{3}{4}{5}{6} → {0}{1}{2,6}{3}{4}{5} → {0,1}{2,6}{3}{4}{5} → {0,1,5}{2,6}{3}{4} → {0,1,5}{2,3,6}{4} → {0,1,4,5}{2,3,6} → {0,1,2,3,4,5,6}.
+        <br/>Total Weight = 1 + 2 + 3 + 4 + 5 + 6 = 21.</li>
+      <li>Problem 3 (7 Vertices: 1 to 7): Selected Edges: (1,6)=10, (3,4)=12, (2,7)=14, (2,3)=16, (4,7)=18 [Rejected], (4,5)=22, (5,7)=24 [Rejected], (5,6)=25.
+        <br/>Total Cost = 10 + 12 + 14 + 16 + 22 + 25 = 99.</li>
+    </ul>
+  </div>
+
+  <h3>6. Fractional Knapsack Problem</h3>
+  <div class="from-pdf">
+    <p>We are given n objects and a knapsack (bag) of capacity m. The object i has weight w<sub>i</sub> and a profit P<sub>i</sub>. If a fraction x<sub>i</sub> is placed into the knapsack, then a profit P<sub>i</sub>x<sub>i</sub> is obtained. The objective is to obtain an optimal solution of the knapsack that maximizes the total profit earned. The total weight of all the chosen objects should not exceed m.</p>
+    <p>Fractional Knapsack problem can be stated as:
+      <br/>Maximize ∑<sub>i=1..n</sub> P<sub>i</sub>x<sub>i</sub> &nbsp; --- (1)
+      <br/>subject to ∑<sub>i=1..n</sub> w<sub>i</sub>x<sub>i</sub> ≤ m &nbsp; --- (2), and 0 ≤ x<sub>i</sub> ≤ 1, 1 ≤ i ≤ n &nbsp; --- (3).
+      <br/>A feasible solution is one that satisfies equations (2) &amp; (3). An optimal solution is a feasible solution that satisfies equation (1).
+    </p>
+  </div>
+
+  <div class="added-ktu">
+    <span class="badge">Added Missing Topic — Greedy Fractional Knapsack Algorithm (KTU Syllabus)</span>
+    <pre>Algorithm GreedyKnapsack(m, n)
+// Items sorted in decreasing order of P[i] / w[i]
+for i = 1 to n do x[i] = 0.0
+u = m
+for i = 1 to n do
+    if (w[i] &gt; u) then break
+    x[i] = 1.0
+    u = u - w[i]
+if (i &lt;= n) then x[i] = u / w[i]</pre>
+  </div>
+
+  <div class="from-pdf">
+    <p>Solved Problem 1: Find the optimal solution for the following Fractional Knapsack problem, given n = 7, m = 15, P = {10, 5, 15, 7, 6, 18, 3}, W = {2, 3, 5, 7, 1, 4, 1}.</p>
+    <p>Calculate P<sub>i</sub>/w<sub>i</sub> = {5, 1.67, 3, 1, 6, 4.5, 3}. Arrange the items in the descending order of P<sub>i</sub>/w<sub>i</sub>: I = {5, 1, 6, 3, 7, 2, 4}, P = {6, 10, 18, 15, 3, 5, 7}, w = {1, 2, 4, 5, 1, 3, 7}.</p>
+    <table class="from-pdf">
+      <thead>
+        <tr><th>Item</th><th>P<sub>i</sub></th><th>w<sub>i</sub></th><th>Taken (x<sub>i</sub>)</th><th>Remaining Capacity (u = u - w<sub>i</sub>)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>5</td><td>6</td><td>1</td><td>1</td><td>14</td></tr>
+        <tr><td>1</td><td>10</td><td>2</td><td>1</td><td>12</td></tr>
+        <tr><td>6</td><td>18</td><td>4</td><td>1</td><td>8</td></tr>
+        <tr><td>3</td><td>15</td><td>5</td><td>1</td><td>3</td></tr>
+        <tr><td>7</td><td>3</td><td>1</td><td>1</td><td>2</td></tr>
+        <tr><td>2</td><td>5</td><td>3</td><td>2/3</td><td>0</td></tr>
+        <tr><td>4</td><td>7</td><td>7</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p>∑ P<sub>i</sub>x<sub>i</sub> = 6(1) + 10(1) + 18(1) + 15(1) + 3(1) + 5(2/3) + 7(0) = 55.33. ∑ w<sub>i</sub>x<sub>i</sub> = 15. x = &lt;1, 2/3, 1, 0, 1, 1, 1&gt;.</p>
+    <p>Solved Problem 2: n = 7, m = 15, P = {5, 10, 15, 7, 8, 9, 4}, w = {1, 3, 5, 4, 1, 3, 2} → P<sub>i</sub>/w<sub>i</sub> = {5, 10/3, 3, 7/4, 8, 3, 2} → I = {5, 1, 2, 3, 6, 7, 4}. ∑ P<sub>i</sub>x<sub>i</sub> = 8(1) + 5(1) + 10(1) + 15(1) + 9(1) + 4(1) = 51. x = &lt;1, 1, 1, 0, 1, 1, 1&gt;.</p>
+    <p>Solved Problem 3: n = 4, m = 60, P = {280, 100, 120, 120}, w = {40, 10, 20, 24}, P<sub>i</sub>/w<sub>i</sub> = {7, 10, 6, 5} → i = {2, 1, 3, 4}. ∑ P<sub>i</sub>x<sub>i</sub> = 100(1) + 280(1) + 120(1/2) = 440. x = &lt;1, 1, 1/2, 0&gt;.</p>
+  </div>
+
+  <h3>7A. Approximation Algorithm Theory and Bin Packing Problem</h3>
+  <div class="added-ktu">
+    <span class="badge">Added Missing Topic — Complete 7-Mark Answer (KTU Syllabus)</span>
+    <p>1. Approximation Algorithm Theory:</p>
+    <ul>
+      <li>Definition: Many optimization problems are NP-Hard, meaning no polynomial-time algorithm is known to find an exact optimal solution. An approximation algorithm runs in polynomial time and finds a feasible, near-optimal solution within a guaranteed factor of the optimal cost.</li>
+      <li>Approximation Ratio ρ(n): If C is the cost of the solution produced by the algorithm and C* is the optimal cost on an input of size n, the algorithm has an approximation ratio ρ(n) if:
+        <br/>max(C / C*, C* / C) ≤ ρ(n).
+        <ul>
+          <li>For a minimization problem (C* ≤ C): C / C* ≤ ρ(n).</li>
+          <li>For a maximization problem (C ≤ C*): C* / C ≤ ρ(n).</li>
+        </ul>
+      </li>
+      <li>PTAS &amp; FPTAS: A Polynomial-Time Approximation Scheme (PTAS) achieves a (1 + ε)-approximation in time polynomial in n for any fixed ε &gt; 0. A Fully Polynomial-Time Approximation Scheme (FPTAS) runs in time polynomial in both n and 1/ε.</li>
+    </ul>
+    <p>2. Bin Packing Problem:</p>
+    <ul>
+      <li>Problem Statement: Given n items of sizes s₁, s₂, ..., sₙ (where 0 &lt; sᵢ ≤ 1) and bins of capacity 1.0, pack all items into the minimum number of bins.</li>
+      <li>Lower Bound: OPT ≥ ⌈∑<sub>i=1..n</sub> sᵢ⌉.</li>
+      <li>Approximation Heuristics:
+        <ol>
+          <li>Next Fit (NF — Online): If the current item fits in the currently open bin, place it there; otherwise close that bin and open a new one. Time: O(n). Bound: NF(I) ≤ 2·OPT - 1 (2-approximation).</li>
+          <li>First Fit (FF — Online): Place the current item into the first open bin (scanning B₁, B₂, ...) that has enough remaining space; if none fits, open a new bin. Time: O(n log n). Bound: FF(I) ≤ ⌈1.7·OPT⌉.</li>
+          <li>Best Fit (BF — Online): Place the current item into the open bin where it leaves the minimum remaining space (tightest fit); if none fits, open a new bin. Time: O(n log n). Bound: BF(I) ≤ ⌈1.7·OPT⌉.</li>
+          <li>First Fit Decreasing (FFD — Offline): Sort items in decreasing order of size (s₁ ≥ s₂ ≥ ... ≥ sₙ) and apply First Fit. Time: O(n log n). Bound: FFD(I) ≤ (11/9)·OPT + 4.</li>
+        </ol>
+      </li>
+      <li>Example: Items S = {0.2, 0.5, 0.4, 0.7, 0.1, 0.3, 0.8}, Bin Capacity = 1.0.
+        <ul>
+          <li>Next Fit (5 Bins): B₁=[0.2, 0.5], B₂=[0.4], B₃=[0.7, 0.1], B₄=[0.3], B₅=[0.8].</li>
+          <li>First Fit (4 Bins): B₁=[0.2, 0.5, 0.1], B₂=[0.4, 0.3], B₃=[0.7], B₄=[0.8].</li>
+          <li>First Fit Decreasing (3 Bins - Optimal): Sorted {0.8, 0.7, 0.5, 0.4, 0.3, 0.2, 0.1} → B₁=[0.8, 0.2], B₂=[0.7, 0.3], B₃=[0.5, 0.4, 0.1].</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <h3>7B. [OR] Complexity Classes: P, NP, NP-Hard, and NP-Complete</h3>
+  <div class="from-pdf">
+    <p>There are 4 complexity classes: 1. Class P, 2. Class NP, 3. Class NP-Hard, 4. Class NP-Complete.</p>
+    <p>1. Class P: Class P consists of those problems that are solvable in polynomial time. The complexity can be expressed as O(n<sup>k</sup>), where n is the size of the input and k is a constant.
+      <br/>Example — PATH Problem: Given a directed graph G, determine whether a directed path exists from s to t.
+      <br/>Algorithm: (1) Place a mark on node s and enqueue s into an empty queue. (2) Repeat Step 3 until the queue is empty. (3) Dequeue the first element, mark all unmarked connected neighbors of it, and enqueue those into the queue. (4) If t is marked then accept, otherwise reject.
+    </p>
+    <p>2. Class NP: Suppose some problems have no polynomial-time solution, but we can verify solutions to these problems in polynomial time. Such problems are called NP problems. Class NP is the class of problems that have a polynomial-time verification algorithm.
+      <br/>Example — Hamiltonian Path Problem (HAM-PATH): A Hamiltonian path in a directed graph G is a directed path that goes through each node exactly once. There is no polynomial-time solution to find a Hamiltonian path from s to t in a given graph. HAM-PATH is to test whether a graph contains a Hamiltonian path connecting two specified nodes.
+      <br/>HAM-PATH Verification Algorithm (Inputs: graph G, two nodes s an
